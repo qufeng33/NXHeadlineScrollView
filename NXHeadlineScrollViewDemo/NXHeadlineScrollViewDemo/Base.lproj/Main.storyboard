@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ItP-Jj-KjW" customClass="NXHeadlineScrollView">
+                                <rect key="frame" x="0.0" y="275" width="600" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="nGT-ud-SLn"/>
+                                </constraints>
+                            </view>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="gsj-M5-Are">
+                                <rect key="frame" x="241" y="325" width="118" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="114" id="a1r-NM-txN"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="changeLeftWithWidth:" destination="BYZ-38-t0r" eventType="valueChanged" id="An2-qj-wuP"/>
+                                </connections>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gsj-M5-Are" firstAttribute="centerX" secondItem="ItP-Jj-KjW" secondAttribute="centerX" id="1yg-pv-9gE"/>
+                            <constraint firstAttribute="trailing" secondItem="ItP-Jj-KjW" secondAttribute="trailing" id="Dbe-ur-2ir"/>
+                            <constraint firstItem="ItP-Jj-KjW" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="S8r-C3-HOy"/>
+                            <constraint firstItem="ItP-Jj-KjW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="216" id="bkH-BP-ePC"/>
+                            <constraint firstItem="gsj-M5-Are" firstAttribute="top" secondItem="ItP-Jj-KjW" secondAttribute="bottom" constant="43" id="gGH-zx-Qns"/>
+                            <constraint firstItem="ItP-Jj-KjW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vwI-S8-zgc"/>
+                            <constraint firstItem="gsj-M5-Are" firstAttribute="bottom" secondItem="ItP-Jj-KjW" secondAttribute="bottom" constant="30" id="yqd-Rf-O9Q"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="bkH-BP-ePC"/>
+                                <exclude reference="gGH-zx-Qns"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="headlineView" destination="ItP-Jj-KjW" id="5J4-ZR-4Bz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="325" y="400"/>
+        </scene>
+    </scenes>
+</document>
