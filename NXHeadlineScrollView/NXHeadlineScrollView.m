@@ -85,10 +85,7 @@
         return;
     }
     NSInteger currentIndex = [self.collectionView indexPathsForVisibleItems].lastObject.row;
-    
-    NSLog(@"\n当前在%@\n",[NSNumber numberWithInteger:currentIndex]);
     NSInteger toIndex = currentIndex + 1 > self.titlesArray.count - 1 ? 0:currentIndex + 1;
-    NSLog(@"\n目标在%@\n",[NSNumber numberWithInteger:toIndex]);
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:toIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
 }
 
