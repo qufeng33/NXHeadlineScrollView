@@ -23,7 +23,7 @@
         NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"这是第%@个头条",[NSNumber numberWithInt:i]] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
         [array addObject:string];
     }
-    self.headlineView.titlesArray  = array;
+    self.headlineView.titleArray   = array;
     self.headlineView.showLeftView = YES;
     // Do any additional setup after loading the view, typically from a nib.
 }

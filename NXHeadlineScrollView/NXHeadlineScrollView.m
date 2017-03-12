@@ -11,8 +11,10 @@
 
 @interface NXHeadlineScrollView ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
-@property (weak, nonatomic) UICollectionView *collectionView;
-@property (weak, nonatomic) NSTimer          *timer;
+@property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) NSTimer          *timer;
+@property (assign, nonatomic) NSInteger        currentIndex;
+@property (strong, nonatomic) NSMutableArray   *titleArrayGroup;
 
 @end
 
@@ -50,10 +52,12 @@
 
 - (void)defaultSetting{
     self.numberOfLine            = 1;
-    self.showLeftView            = YES;
+    self.showLeftView            = NO;
     self.leftViewWidth           = 0;
     self.autoScrollTimeInterval  = 3;
+    self.currentIndex            = 0;
     self.contentBackgroundColor  = [UIColor whiteColor];
+    self.titleArrayGroup         = [[NSMutableArray alloc] init];
 }
 
 - (void)setupUI{
@@ -71,22 +75,27 @@
     self.collectionView.backgroundColor    = self.contentBackgroundColor;
     [self addSubview:self.collectionView];
 
-    UIView *leftBackgroundView             = [[UIView alloc] init];
-    self.leftBackgroundView                = leftBackgroundView;
+    _leftBackgroundView                = [[UIView alloc] init];
     [self addSubview:self.leftBackgroundView];
 }
 
 - (void)reloadData{
+    [self setupTimer];
+    self.currentIndex = 0;
     [self.collectionView reloadData];
 }
 
 - (void)automaticScroll{
-    if (self.titlesArray.count == 0) {
+    if (self.titleArrayGroup.count == 0) {
         return;
     }
-    NSInteger currentIndex = [self.collectionView indexPathsForVisibleItems].lastObject.row;
-    NSInteger toIndex = currentIndex + 1 > self.titlesArray.count - 1 ? 0:currentIndex + 1;
+    NSInteger toIndex = self.currentIndex + 1;
+    if (toIndex == self.titleArrayGroup.count) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+        toIndex = 1;
+    }
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:toIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+    self.currentIndex = toIndex;
 }
 
 - (void)layoutSubviews{
@@ -114,9 +123,9 @@
 
 #pragma mark - Time
 - (void)setupTimer{
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollTimeInterval target:self selector:@selector(automaticScroll) userInfo:nil repeats:YES];
-    self.timer = timer;
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    [self invalidateTimer];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollTimeInterval target:self selector:@selector(automaticScroll) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
 - (void)invalidateTimer{
@@ -126,26 +135,36 @@
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.titlesArray.count;
+    return self.titleArrayGroup.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     HeadlineCell *cell               = [collectionView dequeueReusableCellWithReuseIdentifier:[HeadlineCell cellIdentifier] forIndexPath:indexPath];
     cell.contentView.backgroundColor = self.contentBackgroundColor;
     cell.textLabel.numberOfLines     = self.numberOfLine;
-    [cell configWithText:[self.titlesArray objectAtIndex:indexPath.row]];
+    [cell configWithText:[self.titleArrayGroup objectAtIndex:indexPath.row]];
     return cell;
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (self.DidSelectedItemBlock) {
-        self.DidSelectedItemBlock(indexPath.row);
+        if (indexPath.row == self.titleArrayGroup.count - 1) {
+            self.DidSelectedItemBlock(0);
+        }else{
+            self.DidSelectedItemBlock(indexPath.row);
+        }
     }
 }
 
-- (void)setTitlesArray:(NSArray<NSAttributedString *> *)titlesArray{
-    _titlesArray = titlesArray;
+#pragma mark - setter
+- (void)setTitleArray:(NSArray<NSAttributedString *> *)titleArray{
+    _titleArray = titleArray;
+    [self.titleArrayGroup removeAllObjects];
+    if (titleArray.count > 0) {
+        [self.titleArrayGroup addObjectsFromArray:titleArray];
+        [self.titleArrayGroup addObject:titleArray.firstObject];
+    }
     [self reloadData];
 }
 
@@ -163,7 +182,6 @@
 
 - (void)setAutoScrollTimeInterval:(CGFloat)autoScrollTimeInterval{
     _autoScrollTimeInterval = autoScrollTimeInterval;
-    [self invalidateTimer];
     [self setupTimer];
 }
 

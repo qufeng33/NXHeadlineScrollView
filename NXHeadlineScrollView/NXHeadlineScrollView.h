@@ -11,12 +11,12 @@
 @interface NXHeadlineScrollView : UIView
 
 /** 显示的文字数组 */
-@property (strong, nonatomic) NSArray <NSAttributedString *> *titlesArray;
+@property (copy  , nonatomic) NSArray <NSAttributedString *> *titleArray;
 
 /** 最多几行文字 */
 @property (assign, nonatomic) NSInteger          numberOfLine;
 
-/** 自动滚动间隔时间,默认2s */
+/** 自动滚动间隔时间,默认3s */
 @property (assign, nonatomic) CGFloat            autoScrollTimeInterval;
 
 /** 是否显示左边的视图 */
@@ -26,7 +26,7 @@
 @property (assign, nonatomic) CGFloat            leftViewWidth;
 
 /** 左视图 */
-@property (weak, nonatomic  ) UIView             *leftBackgroundView;
+@property (strong, nonatomic, readonly) UIView   *leftBackgroundView;
 
 /** 内容背景颜色 */
 @property (strong, nonatomic) UIColor            *contentBackgroundColor;
