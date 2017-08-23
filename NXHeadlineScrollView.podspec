@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name         = 'NXHeadlineScrollView'
-s.version      = '0.2.1'
+s.version      = '0.2.2'
 s.summary      = '类似淘宝，京东APP首页的滚动头条'
 s.homepage     = 'https://github.com/qufeng33/NXHeadlineScrollView.git'
 s.license      = 'MIT'

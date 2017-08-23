@@ -81,9 +81,11 @@
 }
 
 - (void)reloadData{
-    [self setupTimer];
-    self.currentIndex = 0;
-    [self.collectionView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setupTimer];
+        self.currentIndex = 0;
+        [self.collectionView reloadData];
+    });
 }
 
 - (void)automaticScroll{
