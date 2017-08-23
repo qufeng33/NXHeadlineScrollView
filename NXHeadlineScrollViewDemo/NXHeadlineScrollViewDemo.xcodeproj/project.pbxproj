@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88A77CEE1F4D1E66001E64C1 /* NSTimer+BlocksTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A77CED1F4D1E66001E64C1 /* NSTimer+BlocksTimer.m */; };
 		88B500A31D4894DD0027C113 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B500A21D4894DD0027C113 /* main.m */; };
 		88B500A61D4894DD0027C113 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B500A51D4894DD0027C113 /* AppDelegate.m */; };
 		88B500A91D4894DD0027C113 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B500A81D4894DD0027C113 /* ViewController.m */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		88A77CEC1F4D1E66001E64C1 /* NSTimer+BlocksTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+BlocksTimer.h"; sourceTree = "<group>"; };
+		88A77CED1F4D1E66001E64C1 /* NSTimer+BlocksTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+BlocksTimer.m"; sourceTree = "<group>"; };
 		88B5009E1D4894DD0027C113 /* NXHeadlineScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NXHeadlineScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B500A21D4894DD0027C113 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88B500A41D4894DD0027C113 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -154,6 +157,8 @@
 				88B500D61D4895260027C113 /* NXHeadlineScrollView.m */,
 				88B500D81D489E060027C113 /* HeadlineCell.h */,
 				88B500D91D489E060027C113 /* HeadlineCell.m */,
+				88A77CEC1F4D1E66001E64C1 /* NSTimer+BlocksTimer.h */,
+				88A77CED1F4D1E66001E64C1 /* NSTimer+BlocksTimer.m */,
 			);
 			name = NXHeadlineScrollView;
 			path = ../NXHeadlineScrollView;
@@ -289,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88A77CEE1F4D1E66001E64C1 /* NSTimer+BlocksTimer.m in Sources */,
 				88B500A91D4894DD0027C113 /* ViewController.m in Sources */,
 				88B500DA1D489E060027C113 /* HeadlineCell.m in Sources */,
 				88B500A61D4894DD0027C113 /* AppDelegate.m in Sources */,
@@ -517,6 +523,7 @@
 				88B500CD1D4894DD0027C113 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88B500CE1D4894DD0027C113 /* Build configuration list for PBXNativeTarget "NXHeadlineScrollViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +532,7 @@
 				88B500D01D4894DD0027C113 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88B500D11D4894DD0027C113 /* Build configuration list for PBXNativeTarget "NXHeadlineScrollViewDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -533,6 +541,7 @@
 				88B500D31D4894DD0027C113 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

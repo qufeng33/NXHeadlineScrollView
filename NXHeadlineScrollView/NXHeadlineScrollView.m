@@ -8,6 +8,7 @@
 
 #import "NXHeadlineScrollView.h"
 #import "HeadlineCell.h"
+#import "NSTimer+BlocksTimer.h"
 
 @interface NXHeadlineScrollView ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -124,7 +125,10 @@
 #pragma mark - Time
 - (void)setupTimer{
     [self invalidateTimer];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollTimeInterval target:self selector:@selector(automaticScroll) userInfo:nil repeats:YES];
+    __weak __typeof(self)weakSelf = self;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollTimeInterval block:^(NSTimer *timer) {
+        [weakSelf automaticScroll];
+    } repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
