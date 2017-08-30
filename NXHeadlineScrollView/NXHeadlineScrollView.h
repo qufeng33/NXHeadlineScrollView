@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, HeadlineStyle){
+    HeadlineStyleOneLine = 0, //一行滚动效果
+    HeadlineStyleTwoLine = 1, //两行滚动效果
+};
+
 @interface NXHeadlineScrollView : UIView
 
 /** 显示的文字数组 */
@@ -18,6 +23,9 @@
 
 /** 自动滚动间隔时间,默认3s */
 @property (assign, nonatomic) CGFloat            autoScrollTimeInterval;
+
+/** 滚动的效果 */
+@property (assign, nonatomic) HeadlineStyle      style;
 
 /** 是否显示左边的视图 */
 @property (assign, nonatomic) BOOL               showLeftView;

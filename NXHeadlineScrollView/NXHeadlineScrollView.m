@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) NSTimer          *timer;
 @property (assign, nonatomic) NSInteger        currentIndex;
+@property (assign, nonatomic) NSInteger        lastIndex;
 @property (strong, nonatomic) NSMutableArray   *titleArrayGroup;
 
 @end
@@ -57,6 +58,7 @@
     self.leftViewWidth           = 0;
     self.autoScrollTimeInterval  = 3;
     self.currentIndex            = 0;
+    self.style                   = HeadlineStyleOneLine;
     self.contentBackgroundColor  = [UIColor whiteColor];
     self.titleArrayGroup         = [[NSMutableArray alloc] init];
 }
@@ -84,6 +86,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setupTimer];
         self.currentIndex = 0;
+        self.lastIndex = self.style == HeadlineStyleOneLine ? self.titleArrayGroup.count - 1 : self.titleArrayGroup.count - 2;
         [self.collectionView reloadData];
     });
 }
@@ -92,12 +95,9 @@
     if (self.titleArrayGroup.count == 0) {
         return;
     }
-    NSInteger toIndex = self.currentIndex + 1;
-    if (toIndex == self.titleArrayGroup.count) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-        toIndex = 1;
-    }
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:toIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+    
+    NSInteger toIndex = self.currentIndex + (self.style == HeadlineStyleOneLine ? 1 : 2);
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:toIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     self.currentIndex = toIndex;
 }
 
@@ -110,7 +110,11 @@
         self.leftBackgroundView.frame = CGRectMake(0, 0, 0, 0);
         self.collectionView.frame     = self.bounds;
     }
-    [(UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout setItemSize:self.collectionView.bounds.size];
+    
+    CGFloat collectionViewWidth = self.collectionView.bounds.size.width;
+    CGFloat collectionViewHeight = self.collectionView.bounds.size.height;
+    CGSize itemSize = self.style == HeadlineStyleOneLine? CGSizeMake(collectionViewWidth, collectionViewHeight):CGSizeMake(collectionViewWidth, collectionViewHeight / 2);
+    [(UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout setItemSize:itemSize];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview{
@@ -163,13 +167,33 @@
     }
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+    if (self.currentIndex == self.lastIndex) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        self.currentIndex = 0;
+    }
+}
+
 #pragma mark - setter
 - (void)setTitleArray:(NSArray<NSAttributedString *> *)titleArray{
     _titleArray = titleArray;
     [self.titleArrayGroup removeAllObjects];
     if (titleArray.count > 0) {
-        [self.titleArrayGroup addObjectsFromArray:titleArray];
-        [self.titleArrayGroup addObject:titleArray.firstObject];
+        
+        if (self.style == HeadlineStyleOneLine) {
+            [self.titleArrayGroup addObjectsFromArray:titleArray];
+            [self.titleArrayGroup addObject:titleArray.firstObject];
+        }
+        
+        else if (self.style == HeadlineStyleTwoLine){
+            [self.titleArrayGroup addObjectsFromArray:titleArray];
+
+            if (titleArray.count % 2 > 0) {
+                [self.titleArrayGroup addObject:[[NSAttributedString alloc] initWithString:@" "]];
+            }
+            [self.titleArrayGroup addObject:titleArray.firstObject];
+            [self.titleArrayGroup addObject:titleArray.count > 2 ? [titleArray objectAtIndex:1] : [[NSAttributedString alloc] initWithString:@" "]];
+        }
     }
     [self reloadData];
 }
