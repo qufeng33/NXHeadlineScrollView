@@ -18,11 +18,12 @@
     [super viewDidLoad];
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
         
         NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"这是第%@个头条",[NSNumber numberWithInt:i]] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
         [array addObject:string];
     }
+    self.headlineView.style = HeadlineStyleTwoLine;
     self.headlineView.titleArray   = array;
     self.headlineView.showLeftView = YES;
     // Do any additional setup after loading the view, typically from a nib.
