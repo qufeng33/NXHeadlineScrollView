@@ -18,7 +18,7 @@
     [super viewDidLoad];
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 9; i++) {
         
         NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"这是第%@个头条",[NSNumber numberWithInt:i]] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
         [array addObject:string];

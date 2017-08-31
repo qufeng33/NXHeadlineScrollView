@@ -96,7 +96,13 @@
         return;
     }
     
+    if (self.currentIndex == self.lastIndex) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        self.currentIndex = 0;
+    }
+    
     NSInteger toIndex = self.currentIndex + (self.style == HeadlineStyleOneLine ? 1 : 2);
+    
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:toIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     self.currentIndex = toIndex;
 }
@@ -164,13 +170,6 @@
         }else{
             self.DidSelectedItemBlock(indexPath.row);
         }
-    }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
-    if (self.currentIndex == self.lastIndex) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-        self.currentIndex = 0;
     }
 }
 
